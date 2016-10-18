@@ -24,6 +24,7 @@ from sqlalchemy import (Boolean,
                         String,
                         Numeric,
                         Time)
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.schema import (FetchedValue, ColumnDefault, Column)
 from sqlalchemy.orm import (ColumnProperty, RelationshipProperty)
 
@@ -326,7 +327,8 @@ class SQLAlchemySchemaNode(colander.SchemaNode):
 
         elif isinstance(column_type, Time):
             type_ = colander.Time()
-
+        elif isinstance(column_type, UUID):
+            type_ = colander.String()
         else:
             raise NotImplementedError(
                 'Not able to derive a colander type from sqlalchemy '
